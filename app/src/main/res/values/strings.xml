@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">TicTacToe</string>
+    <string name="app_name">Tic Tac Toe</string>
+
+    <!-- API -->
+    <string name="hostname">https://generic-game-service.herokuapp.com/Game</string>
+    <string name="create_game"></string>
+    <string name="poll_game">poll</string>
+    <string name="update_game">update</string>
+    <string name="join_game">join</string>
+    <string name="Game_ID">d0dw</string>
+    <string name="API_key">gjF9ebA3Ix</string>
+
+    <!-- Shared preference -->
+    <string name="Preference_file">no.uia.tictactoe.PREFERENCE_FILE</string>
+    <string name="Pref_Game_ID">Game_ID</string>
+    <string name="Pref_Player">Player</string>
+
 </resources>
