@@ -2,11 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="10dp"
-    tools:context=".view.dialog.JoinGameDialog">
+    tools:context=".view.dialog.CreateGameDialog">
 
     <EditText
         android:id="@+id/dialog_playername"
@@ -15,23 +14,10 @@
         android:focusable="true"
         android:hint="Player name"
         android:inputType="text"
-        android:text=""
         android:paddingTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/dialog_gameId"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:hint="Game ID"
-        android:inputType="text"
-        android:paddingTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_playername" />
 
 
     <Button
@@ -40,12 +26,10 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:text="Join Game"
         android:padding="10dp"
+        android:text="Create Game"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_gameId" />
-
+        app:layout_constraintTop_toBottomOf="@+id/dialog_playername" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

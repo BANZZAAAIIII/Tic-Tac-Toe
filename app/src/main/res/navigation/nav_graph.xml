@@ -12,10 +12,35 @@
         <action
             android:id="@+id/action_menuFragment_to_joinGameDialog"
             app:destination="@id/joinGameDialog" />
+        <action
+            android:id="@+id/action_menuFragment_to_createGameDialog"
+            app:destination="@id/createGameDialog" />
     </fragment>
     <dialog
         android:id="@+id/joinGameDialog"
         android:name="no.uia.tictactoe.view.dialog.JoinGameDialog"
-        android:label="fragment_join_game_dialog"
-        tools:layout="@layout/join_game_dialog" />
+        android:label="join_game_dialog"
+        tools:layout="@layout/join_game_dialog" >
+        <action
+            android:id="@+id/action_joinGameDialog_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/createGameDialog"
+        android:name="no.uia.tictactoe.view.dialog.CreateGameDialog"
+        android:label="create_game_dialog"
+        tools:layout="@layout/create_game_dialog" >
+        <action
+            android:id="@+id/action_createGameDialog_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="no.uia.tictactoe.view.GameFragment"
+        android:label="game_fragment"
+        tools:layout="@layout/game_fragment" >
+        <action
+            android:id="@+id/action_gameFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
 </navigation>

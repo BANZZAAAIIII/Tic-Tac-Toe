@@ -1,4 +1,7 @@
 package no.uia.tictactoe.data
 
+typealias State = List<List<Int>>
 
-data class GameState(val players: MutableList<String>, val gameID: String, val states: List<List<Int>>)
+data class GameState(val players: MutableList<String>, val gameId: String, val state: State)
+
+
