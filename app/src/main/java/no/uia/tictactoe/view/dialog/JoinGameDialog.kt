@@ -26,9 +26,9 @@ class JoinGameDialog : BottomSheetDialogFragment() {
             dialogButton.setOnClickListener {
                 val gameId = dialogGameId.text.toString()
                 val player = dialogPlayername.text.toString()
-                GameManager.joinGame(player, gameId)
-
-                findNavController().navigate(R.id.action_joinGameDialog_to_gameFragment)
+                GameManager.joinGame(player, gameId) {
+                    findNavController().navigate(R.id.action_joinGameDialog_to_gameFragment)
+                }
             }
         }
 

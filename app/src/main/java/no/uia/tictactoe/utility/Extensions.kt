@@ -4,3 +4,4 @@ import no.uia.tictactoe.data.GameState
 
 typealias State = List<List<Int>>
 typealias GameServiceCallback = (game: GameState?, error: Int?) -> Unit
+typealias GameManagerCallback = (Unit) -> Unit

@@ -35,9 +35,9 @@ class CreateGameDialog : BottomSheetDialogFragment() {
 
             dialogButton.setOnClickListener {
                 val player = dialogPlayername.text.toString()
-                GameManager.createGame(player)
-
-                findNavController().navigate(R.id.action_createGameDialog_to_gameFragment)
+                GameManager.createGame(player) {
+                    findNavController().navigate(R.id.action_createGameDialog_to_gameFragment)
+                }
             }
         }
 
