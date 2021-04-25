@@ -3,8 +3,8 @@ package no.uia.tictactoe
 import android.content.Context
 import android.util.Log
 import no.uia.tictactoe.data.GameState
-import no.uia.tictactoe.data.State
 import no.uia.tictactoe.utility.App
+import no.uia.tictactoe.utility.State
 
 object GameManager {
     private val LOG_TAG = "GameManager"
@@ -12,42 +12,72 @@ object GameManager {
 
     private val startingState: State = listOf(listOf(0,0,0),listOf(0,0,0),listOf(0,0,0))
 
-    var player1: String? = null
-    var player2: String? = null
-    var gameId: String? = null
-
     fun createGame(playerName: String) {
-
-        GameService.createGame(playerName, startingState) { game: GameState?, error: Int? ->
+        GameService.createGame(playerName, startingState) { game, error ->
             if (error != null) {
                 // Toast or something
                 Log.e(LOG_TAG, "Error connecting to server: $error")
 
             } else if (game != null) {
-                val preference = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
-                with(preference.edit()) {
-                    putString(context.getString(R.string.Pref_Game_ID), game.gameId)
-                    putString(context.getString(R.string.Pref_Player1), game.players[0])
-                    commit() // use apply() for async saving
-                }
+                saveToPref(game.players, game.gameId)
             }
         }
     }
 
     fun joinGame(playerName: String, id: String) {
-        GameService.joinGame(playerName, id) { game: GameState?, error: Int? ->
+        GameService.joinGame(playerName, id) { game, error ->
             if (error != null) {
                 // Toast or something
                 Log.e(LOG_TAG, "Error connecting to server: $error")
 
             } else if (game != null) {
-                val preference = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
-                with(preference.edit()) {
-                    putString(context.getString(R.string.Pref_Game_ID), game.gameId)
-                    putString(context.getString(R.string.Pref_Player1), game.players[0])
-                    commit() // use apply() for async saving
-                }
+                saveToPref(game.players, game.gameId)
             }
+        }
+    }
+
+    fun updateGame(state: State) {
+        val preference = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
+        val player1 = preference.getString(context.getString(R.string.Pref_Player1), "")
+        val gameId = preference.getString(context.getString(R.string.Pref_Game_ID), "")
+        val players: List<String> = listOf<String>(player1.toString())
+
+        GameService.updateGame(players, gameId!!, state) { game, error ->
+            if (error != null) {
+                // Toast or something
+                Log.e(LOG_TAG, "Error connecting to server: $error")
+
+            } else if (game != null) {
+                Log.v(LOG_TAG, "Updated game state: $game")
+            }
+        }
+    }
+
+    fun pollGame() {
+        val preference = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
+        val gameId = preference.getString(context.getString(R.string.Pref_Game_ID), "")
+        GameService.pollGame(gameId!!) { game, error ->
+            if (error != null) {
+                // Toast or something
+                Log.e(LOG_TAG, "Error connecting to server: $error")
+
+            } else if (game != null) {
+                Log.v(LOG_TAG, "Polled game state: $game")
+            }
+        }
+    }
+
+
+    private fun saveToPref(players: List<String>, gameId: String) {
+        val preference = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
+        with(preference.edit()) {
+            putString(context.getString(R.string.Pref_Game_ID), gameId)
+
+            putString(context.getString(R.string.Pref_Player1), players[0])
+            if (players.size > 1){
+                putString(context.getString(R.string.Pref_Player1), players[1])
+            }
+            apply() // use apply() for async saving
         }
     }
 }

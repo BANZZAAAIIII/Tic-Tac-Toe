@@ -32,9 +32,17 @@ class GameFragment : Fragment() {
 
         Log.v(LOG_TAG, sharedPref.all.toString())
 
+
         binding.Player1.text = sharedPref.getString(context.getString(R.string.Pref_Player1), "")
         binding.gameId.text = sharedPref.getString(context.getString(R.string.Pref_Game_ID), "")
 
+        binding.position1.setOnClickListener {
+            GameManager.updateGame(listOf(listOf(1,0,0),listOf(0,0,0),listOf(0,0,0)))
+        }
+
+        binding.position2.setOnClickListener {
+            GameManager.pollGame()
+        }
 
 
         return binding.root

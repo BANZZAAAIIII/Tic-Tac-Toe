@@ -11,7 +11,7 @@
     <string name="API_key">gjF9ebA3Ix</string>
 
     <string name="TIMEOUT_MS">10000</string>
-    <string name="MAX_RETRIES">3</string>
+    <string name="MAX_RETRIES">5</string>
 
 
     <!-- Shared preference -->

@@ -38,9 +38,5 @@
         android:id="@+id/gameFragment"
         android:name="no.uia.tictactoe.view.GameFragment"
         android:label="game_fragment"
-        tools:layout="@layout/game_fragment" >
-        <action
-            android:id="@+id/action_gameFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
-    </fragment>
+        tools:layout="@layout/game_fragment" />
 </navigation>
