@@ -1,5 +1,6 @@
 package no.uia.tictactoe.view.dialog
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,24 +11,41 @@ import no.uia.tictactoe.GameManager
 import no.uia.tictactoe.GameService
 import no.uia.tictactoe.R
 import no.uia.tictactoe.databinding.JoinGameDialogBinding
+import no.uia.tictactoe.utility.App
+import no.uia.tictactoe.utility.Marks
 
 class JoinGameDialog : BottomSheetDialogFragment() {
 
     private lateinit var binding: JoinGameDialogBinding
 
+    private val context = App.context
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = JoinGameDialogBinding.inflate(layoutInflater)
+        binding = JoinGameDialogBinding.inflate(layoutInflater, container, false)
+
+        val sharedPref = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
 
         binding.apply {
+            // Sets users last player name in text box
+            dialogPlayername.setText(sharedPref.getString(context.getString(R.string.Pref_Player1), ""))
+
             dialogButton.setOnClickListener {
                 val gameId = dialogGameId.text.toString()
                 val player = dialogPlayername.text.toString()
+
                 GameManager.joinGame(player, gameId) {
-                    findNavController().navigate(R.id.action_joinGameDialog_to_gameFragment)
+                    with(sharedPref.edit()) {
+                        putString(context.getString(R.string.Pref_Player1), player)
+                        putString(context.getString(R.string.Pref_Game_ID), gameId)
+                        apply() // use apply() for async saving
+                    }
+
+                    val args = JoinGameDialogDirections.actionJoinGameDialogToGameFragment(Marks.O, player)
+                    findNavController().navigate(args)
                 }
             }
         }

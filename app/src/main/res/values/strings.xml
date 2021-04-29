@@ -24,5 +24,8 @@
     <!-- Game Fragment -->
     <string name="versus">Versus</string>
     <string name="share_ID_Text">Game ID</string>
+    <string name="turn_init">Waiting for another player to join</string>
+    <string name="turn_your">Your turn</string>
+    <string name="turn_waiting">waiting on other player</string>
 
 </resources>

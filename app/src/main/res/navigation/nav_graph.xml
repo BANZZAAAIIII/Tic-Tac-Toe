@@ -32,11 +32,22 @@
         tools:layout="@layout/create_game_dialog" >
         <action
             android:id="@+id/action_createGameDialog_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </dialog>
     <fragment
         android:id="@+id/gameFragment"
         android:name="no.uia.tictactoe.view.GameFragment"
         android:label="game_fragment"
-        tools:layout="@layout/game_fragment" />
+        tools:layout="@layout/game_fragment" >
+        <argument
+            android:name="mark"
+            app:argType="string" />
+        <argument
+            android:name="playerName"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -13,6 +13,7 @@ import no.uia.tictactoe.GameManager
 import no.uia.tictactoe.R
 import no.uia.tictactoe.databinding.CreateGameDialogBinding
 import no.uia.tictactoe.utility.App
+import no.uia.tictactoe.utility.Marks
 
 class CreateGameDialog : BottomSheetDialogFragment() {
 
@@ -20,12 +21,12 @@ class CreateGameDialog : BottomSheetDialogFragment() {
 
     private val context = App.context
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = CreateGameDialogBinding.inflate(layoutInflater)
+        binding = CreateGameDialogBinding.inflate(layoutInflater, container, false)
 
         val sharedPref = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
 
@@ -35,8 +36,15 @@ class CreateGameDialog : BottomSheetDialogFragment() {
 
             dialogButton.setOnClickListener {
                 val player = dialogPlayername.text.toString()
+
                 GameManager.createGame(player) {
-                    findNavController().navigate(R.id.action_createGameDialog_to_gameFragment)
+                    with(sharedPref.edit()) {
+                        putString(context.getString(R.string.Pref_Player1), player)
+                        apply() // use apply() for async saving
+                    }
+
+                    val args = CreateGameDialogDirections.actionCreateGameDialogToGameFragment(Marks.X, player)
+                    findNavController().navigate(args)
                 }
             }
         }

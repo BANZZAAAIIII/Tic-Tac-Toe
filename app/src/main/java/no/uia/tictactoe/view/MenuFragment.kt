@@ -32,9 +32,9 @@ class MenuFragment : Fragment() {
             findNavController().navigate(R.id.action_menuFragment_to_joinGameDialog)
         }
 
-        GameManager.snackbarMessage.observe(viewLifecycleOwner, {
-            if (it != "") {
-                Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
+        GameManager.snackbarMessage.observe(viewLifecycleOwner, { message ->
+            if (!message.isNullOrBlank()) {
+                Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
                 // reset live date value to avoid it being shown again
                 GameManager.resetSnackbar()
             }

@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="@string/versus"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:padding="10dp"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Player1" />
@@ -54,14 +54,19 @@
         android:id="@+id/turn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Waiting for another player to join"
+        android:text="@string/turn_init"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Player2" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -70,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/turn">
 
         <LinearLayout
+            android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -81,7 +87,7 @@
                 android:layout_height="90dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="X"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <Button
@@ -91,7 +97,7 @@
                 android:layout_height="90dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="O"
+                android:text=""
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <Button
@@ -107,6 +113,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -143,6 +150,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -187,8 +195,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toTopOf="@+id/gameId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/gameId"
@@ -199,7 +206,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/board" />
 
 
 
