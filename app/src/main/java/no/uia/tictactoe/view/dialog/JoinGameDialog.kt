@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import no.uia.tictactoe.GameManager
 import no.uia.tictactoe.GameService
 import no.uia.tictactoe.R
@@ -31,21 +32,24 @@ class JoinGameDialog : BottomSheetDialogFragment() {
 
         binding.apply {
             // Sets users last player name in text box
-            dialogPlayername.setText(sharedPref.getString(context.getString(R.string.Pref_Player1), ""))
+            dialogPlayername.setText(sharedPref.getString(context.getString(R.string.Pref_Player), ""))
 
             dialogButton.setOnClickListener {
                 val gameId = dialogGameId.text.toString()
                 val player = dialogPlayername.text.toString()
 
-                GameManager.joinGame(player, gameId) {
-                    with(sharedPref.edit()) {
-                        putString(context.getString(R.string.Pref_Player1), player)
-                        putString(context.getString(R.string.Pref_Game_ID), gameId)
-                        apply() // use apply() for async saving
-                    }
+                if (player != "" && player.length <= 50) {
+                    GameManager.joinGame(player, gameId) {
+                        with(sharedPref.edit()) {
+                            putString(context.getString(R.string.Pref_Player), player)
+                            apply()
+                        }
 
-                    val args = JoinGameDialogDirections.actionJoinGameDialogToGameFragment(Marks.O, player)
-                    findNavController().navigate(args)
+                        val args = JoinGameDialogDirections.actionJoinGameDialogToGameFragment(Marks.O, player)
+                        findNavController().navigate(args)
+                    }
+                } else {
+                    Snackbar.make(root, "Invalid username", Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

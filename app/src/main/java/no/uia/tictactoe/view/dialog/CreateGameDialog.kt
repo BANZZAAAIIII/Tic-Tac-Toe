@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import no.uia.tictactoe.GameManager
 import no.uia.tictactoe.R
 import no.uia.tictactoe.databinding.CreateGameDialogBinding
@@ -32,19 +33,23 @@ class CreateGameDialog : BottomSheetDialogFragment() {
 
         binding.apply {
             // Sets users last player name in text box
-            dialogPlayername.setText(sharedPref.getString(context.getString(R.string.Pref_Player1), ""))
+            dialogPlayername.setText(sharedPref.getString(context.getString(R.string.Pref_Player), ""))
 
             dialogButton.setOnClickListener {
                 val player = dialogPlayername.text.toString()
 
-                GameManager.createGame(player) {
-                    with(sharedPref.edit()) {
-                        putString(context.getString(R.string.Pref_Player1), player)
-                        apply() // use apply() for async saving
-                    }
+                if (player != "" && player.length <= 50) {
+                    GameManager.createGame(player) {
+                        with(sharedPref.edit()) {
+                            putString(context.getString(R.string.Pref_Player), player)
+                            apply()
+                        }
 
-                    val args = CreateGameDialogDirections.actionCreateGameDialogToGameFragment(Marks.X, player)
-                    findNavController().navigate(args)
+                        val args = CreateGameDialogDirections.actionCreateGameDialogToGameFragment(Marks.X, player)
+                        findNavController().navigate(args)
+                    }
+                } else {
+                    Snackbar.make(root, "Invalid username", Snackbar.LENGTH_SHORT).show()
                 }
             }
         }

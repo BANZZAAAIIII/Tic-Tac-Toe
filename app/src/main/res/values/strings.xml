@@ -16,9 +16,7 @@
 
     <!-- Shared preference -->
     <string name="Preference_file">no.uia.tictactoe.PREFERENCE_FILE</string>
-    <string name="Pref_Game_ID">Game_ID</string>
-    <string name="Pref_Player1">Player1</string>
-    <string name="Pref_Player2">Player2</string>
+    <string name="Pref_Player">Player</string>
 
 
     <!-- Game Fragment -->

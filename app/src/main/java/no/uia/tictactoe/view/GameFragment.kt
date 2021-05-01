@@ -1,6 +1,5 @@
 package no.uia.tictactoe.view
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -48,11 +47,10 @@ class GameFragment : Fragment(), View.OnClickListener {
         mark = args.mark
 
 
-        val sharedPref = App.context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
-        binding.gameId.text = sharedPref.getString(context.getString(R.string.Pref_Game_ID), "")
 
         // Start the game, aka polling
-        GameManager.startGame(mark, player)
+        val gameId = GameManager.startGame()
+        binding.gameId.text = gameId
 
         binding.apply {
             position1.setOnClickListener(this@GameFragment)
@@ -68,7 +66,9 @@ class GameFragment : Fragment(), View.OnClickListener {
 
         GameManager.currentState.observe(viewLifecycleOwner, { newState ->
             Log.v(LOG_TAG, "Live data state update: $newState")
-            updateBoard(newState)
+            updateBoardUI(newState)
+
+            currentState = newState
         })
 
         GameManager.players.observe(viewLifecycleOwner, {
@@ -76,10 +76,6 @@ class GameFragment : Fragment(), View.OnClickListener {
             binding.Player1.text = it[0]
             if (it.size > 1) {
                 binding.Player2.text = it[1]
-//                when (mark) {
-//                    Marks.X -> binding.turn.text = context.getText(R.string.turn_your)
-//                    Marks.O -> binding.turn.text = context.getText(R.string.turn_waiting)
-//                }
             }
         })
 
@@ -87,7 +83,7 @@ class GameFragment : Fragment(), View.OnClickListener {
             Log.v(LOG_TAG, "Live data current player update: $it")
             currentPlayer = it
 
-            updateTurn()
+            updateTurnUI()
         })
 
         GameManager.snackbarMessage.observe(viewLifecycleOwner, { message ->
@@ -101,7 +97,7 @@ class GameFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
-    private fun updateTurn() {
+    private fun updateTurnUI() {
         when (currentPlayer) {
             Marks.O -> {
                 when (mark) {
@@ -118,7 +114,7 @@ class GameFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun updateBoard(newState: State) {
+    private fun updateBoardUI(newState: State) {
         newState.forEachIndexed{i, list ->
             list.forEachIndexed{j, value ->
                 if (currentState[i][j] != value) {
@@ -149,8 +145,10 @@ class GameFragment : Fragment(), View.OnClickListener {
                     newState[i].add(value)
                 }
             }
+            // Applying change to newState
             newState[index1][index2] = mark
-            GameManager.updateState(newState)
+
+            GameManager.updateGame(newState)
         }
 
         if (v != null && currentPlayer == mark) {
