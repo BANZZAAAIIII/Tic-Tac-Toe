@@ -38,7 +38,7 @@ class CreateGameDialog : BottomSheetDialogFragment() {
             dialogButton.setOnClickListener {
                 val player = dialogPlayername.text.toString()
 
-                if (player != "" && player.length <= 50) {
+                if (player != "" && player.length <= 30) {
                     GameManager.createGame(player) {
                         with(sharedPref.edit()) {
                             putString(context.getString(R.string.Pref_Player), player)

@@ -38,7 +38,7 @@ class JoinGameDialog : BottomSheetDialogFragment() {
                 val gameId = dialogGameId.text.toString()
                 val player = dialogPlayername.text.toString()
 
-                if (player != "" && player.length <= 50) {
+                if (player != "" && player.length <= 30) {
                     GameManager.joinGame(player, gameId) {
                         with(sharedPref.edit()) {
                             putString(context.getString(R.string.Pref_Player), player)

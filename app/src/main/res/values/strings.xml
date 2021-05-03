@@ -13,6 +13,8 @@
     <string name="TIMEOUT_MS">10000</string>
     <string name="MAX_RETRIES">5</string>
 
+    <string name="Won">has won!</string>
+    <string name="Tie">Tie!</string>
 
     <!-- Shared preference -->
     <string name="Preference_file">no.uia.tictactoe.PREFERENCE_FILE</string>

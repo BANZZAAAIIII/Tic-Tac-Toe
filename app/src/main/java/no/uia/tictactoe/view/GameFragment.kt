@@ -22,8 +22,9 @@ class GameFragment : Fragment(), View.OnClickListener {
     private val context = App.context
     private val LOG_TAG = "GameFragment"
 
-    // mark is X if player has created a game, or O if they hav joined
+    // mark is X if player has created a game, or O if they have joined a game
     private var mark = ""
+    private var players = listOf<String>()
     private var currentPlayer = ""
 
 
@@ -73,9 +74,11 @@ class GameFragment : Fragment(), View.OnClickListener {
 
         GameManager.players.observe(viewLifecycleOwner, {
             Log.v(LOG_TAG, "Live data players update: $it")
-            binding.Player1.text = it[0]
-            if (it.size > 1) {
-                binding.Player2.text = it[1]
+            players = it
+
+            binding.Player1.text = players[0]
+            if (players.size > 1) {
+                binding.Player2.text = players[1]
             }
         })
 
@@ -84,6 +87,15 @@ class GameFragment : Fragment(), View.OnClickListener {
             currentPlayer = it
 
             updateTurnUI()
+        })
+
+        GameManager.winner.observe(viewLifecycleOwner, {
+            when(it) {
+                Marks.X -> binding.winner.text = "${players[0]} ${context.getText(R.string.Won)}"
+                Marks.O -> binding.winner.text = "${players[1]} ${context.getText(R.string.Won)}"
+                "tie"   -> binding.winner.text = context.getText(R.string.Tie)
+            }
+            binding.turn.text = ""
         })
 
         GameManager.snackbarMessage.observe(viewLifecycleOwner, { message ->

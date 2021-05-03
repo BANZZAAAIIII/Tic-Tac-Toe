@@ -21,10 +21,12 @@
 
     <TextView
         android:id="@+id/Player1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
@@ -42,10 +44,12 @@
 
     <TextView
         android:id="@+id/Player2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/VS" />
@@ -188,6 +192,19 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/winner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=""
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_margin="20dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/board" />
+
+    <TextView
         android:id="@+id/shareIdText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -206,7 +223,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board" />
+        app:layout_constraintTop_toBottomOf="@+id/winner" />
 
 
 
