@@ -30,12 +30,11 @@ object GameService {
 
     private fun getEndpoint(call: APICall, gameId: String? = null): String {
         val basePath = context.getString(R.string.hostname)
-        return when {
-            (call == APICall.CREATE_GAME) -> basePath
-            (call == APICall.JOIN_GAME)   -> "$basePath/$gameId/${context.getString(R.string.join_game)}"
-            (call == APICall.POLL_GAME)   -> "$basePath/$gameId/${context.getString(R.string.poll_game)}"
-            (call == APICall.UPDATE_GAME) -> "$basePath/$gameId/${context.getString(R.string.update_game)}"
-            else -> ""
+        return when (call) {
+            APICall.CREATE_GAME -> basePath
+            APICall.JOIN_GAME   -> "$basePath/$gameId/${context.getString(R.string.join_game)}"
+            APICall.POLL_GAME   -> "$basePath/$gameId/${context.getString(R.string.poll_game)}"
+            APICall.UPDATE_GAME -> "$basePath/$gameId/${context.getString(R.string.update_game)}"
         }
     }
 

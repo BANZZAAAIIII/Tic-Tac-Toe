@@ -22,7 +22,7 @@ object GameManager {
     private var _currentState = MutableLiveData(startingState)
     val currentState: LiveData<State> get() = _currentState
 
-    private var _currentPlayer = MutableLiveData(Marks.blank)
+    private var _currentPlayer = MutableLiveData<String>()
     val currentPlayer: LiveData<String> get() = _currentPlayer
 
     private var _players =  MutableLiveData<List<String>>()
@@ -110,7 +110,7 @@ object GameManager {
 
             return gameId
         } else {
-            Log.e(LOG_TAG, "No gameId found, gameId: $gameId")
+            Log.e(LOG_TAG, "No gameId found")
             _snackbarMessage.value = "No game ID found"
             return null
         }
@@ -146,9 +146,7 @@ object GameManager {
                     if (value == Marks.blank) {
                         updater.invoke(Unit)
 
-
                         val result = checkWinner(newState)
-                        println("result: $result")
                         if (result != null) {
                             _winner.value = result
                         } else {
@@ -196,13 +194,13 @@ object GameManager {
         }
 
         // Check for tie
-        var emptySquares = 0
+        var squaresLeft = 0
         state.forEach { row ->
             if (row.contains(Marks.blank)) {
-                emptySquares++
+                squaresLeft++
             }
         }
-        if (emptySquares == 0){
+        if (squaresLeft == 0){
             return "tie"
         }
 

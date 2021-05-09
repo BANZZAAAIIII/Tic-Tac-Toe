@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import no.uia.tictactoe.GameManager
-import no.uia.tictactoe.GameService
 import no.uia.tictactoe.R
 import no.uia.tictactoe.databinding.JoinGameDialogBinding
 import no.uia.tictactoe.utility.App
@@ -27,6 +27,14 @@ class JoinGameDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = JoinGameDialogBinding.inflate(layoutInflater, container, false)
+
+        GameManager.snackbarMessage.observe(viewLifecycleOwner, { message ->
+            if (!message.isNullOrBlank()) {
+                Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+                // reset live date value to avoid it being shown again
+                GameManager.resetSnackbar()
+            }
+        })
 
         val sharedPref = context.getSharedPreferences(context.getString(R.string.Preference_file), Context.MODE_PRIVATE)
 
@@ -49,7 +57,7 @@ class JoinGameDialog : BottomSheetDialogFragment() {
                         findNavController().navigate(args)
                     }
                 } else {
-                    Snackbar.make(root, "Invalid username", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Invalid username", Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
