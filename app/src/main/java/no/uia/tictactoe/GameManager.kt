@@ -45,7 +45,7 @@ object GameManager {
                 Log.e(LOG_TAG, "Error connecting to server: $error")
                 _snackbarMessage.value = "Error connecting to server: $error"
             } else if (game != null) {
-                reset()
+                resetGame()
                 gameId = game.gameId
                 _players.value = listOf(playerName)
                 callback(Unit)
@@ -59,7 +59,7 @@ object GameManager {
                 Log.e(LOG_TAG, "Error connecting to server: $error")
                 _snackbarMessage.value = "Error connecting to server: $error"
             } else if (game != null) {
-                reset()
+                resetGame()
                 gameId = game.gameId
                 _players.value = listOf(playerName)
                 callback(Unit)
@@ -67,7 +67,7 @@ object GameManager {
         }
     }
 
-    private fun reset() {
+    private fun resetGame() {
         gameId = null
         _players.value = null
         _winner.value = null
